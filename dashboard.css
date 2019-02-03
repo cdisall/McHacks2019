@@ -1,5 +1,14 @@
 /* dashboard.css */
-html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif;}
+.rbcBlueBack {
+    background-color: #0051A5
+}
+.rbcYellowBack {
+    background-color: #FEDF01
+}
+.rbcDarkBlueBack {
+    background-color: #002750
+}
 .rbcBlue {
     color: #0051A5
 }
@@ -18,3 +27,25 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 .rbcApple {
     color: #AABA0A
 }
+.scheduleButton {
+	background-color:#00b0f0;
+	-moz-border-radius:31px;
+	-webkit-border-radius:31px;
+	border-radius:31px;
+	border:2px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:7px 41px;
+	text-decoration:none;
+}
+.scheduleButton:hover {
+	background-color:#00b0f0;
+}
+.scheduleButton:active {
+	position:relative;
+	top:1px;
+}
+
