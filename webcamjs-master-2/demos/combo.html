@@ -4,7 +4,7 @@
 
 <head>
 
-<!-- <script src='https://cdn.jsdelivr.net/jquery.cloudinary/1.0.18/jquery.cloudinary.js' type='text/javascript'></script>
+	<!-- <script src='https://cdn.jsdelivr.net/jquery.cloudinary/1.0.18/jquery.cloudinary.js' type='text/javascript'></script>
 <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>-->
 <script src="/script.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
@@ -90,106 +90,6 @@
 	
 	<!-- Code to handle taking the snapshot and displaying it locally -->
 	<script language="JavaScript">
-
-	function faceDetect(pictureURL) {
-
-        var result = "";
-
-        // Request parameters.
-        var params = {
-            "returnFaceId": "true",
-            "returnFaceLandmarks": "false",
-            "returnFaceAttributes": ""
-        };
-
-        // Display the image.
-        var sourceImageUrl = pictureURL; //document.getElementById("inputImage").value;
-        //document.querySelector("#sourceImage").src = sourceImageUrl;
-
-        // Perform the REST API call.
-        $.ajax({
-            url:  "https://canadacentral.api.cognitive.microsoft.com/face/v1.0/detect?" + $.param(params),
-
-            // Request headers.
-            beforeSend: function(xhrObj){
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "356733d2505046d59fe44976393c4635");
-            },
-
-            type: "POST",
-
-            // Request body.
-            data: '{"url": ' + '' + "https://firebasestorage.googleapis.com/v0/b/mcadvisor-e679e.appspot.com/o/1549178990595-bunny?alt=media&token=5d12859f-6448-44f4-a245-c61b63360318" + '}',
-        })
-
-        .done(function(data) {
-
-            const dataptr = JSON.stringify(data);
-            var id1 = JSON.parse(dataptr)[0].faceId.toString();
-
-            console.log(id1);
-            //faceCompare(id1, id1);
-
-        })
-
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            // Display error message.
-            var errorString = (errorThrown === "") ?
-                "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-            errorString += (jqXHR.responseText === "") ?
-                "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
-                    jQuery.parseJSON(jqXHR.responseText).message :
-                        jQuery.parseJSON(jqXHR.responseText).error.message;
-            alert(errorString);
-        });
-
-        return result;
-    }
-
-
-
-	function faceCompare(id1, id2) {
-
-
-        var bodyAPI = '{"faceId1": "' + id1 +'", "faceId2": "'+ id2 +'"}';
-
-        //console.log(bodyAPI);
-        $.ajax({
-            url:  "https://canadacentral.api.cognitive.microsoft.com/face/v1.0/verify",
-
-            // Request headers.
-            beforeSend: function(xhrObj){
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "356733d2505046d59fe44976393c4635");
-            },
-
-            type: "POST",
-
-            // Request body
-
-            data: bodyAPI,
-        })
-
-        .done(function(data) {
-
-            const dataptr = JSON.stringify(data);
-
-            assert(JSON.parse(dataptr).isIdentical);
-
-        })
-
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            // Display error message.
-            var errorString = (errorThrown === "") ?
-                "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-            errorString += (jqXHR.responseText === "") ?
-                "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
-                    jQuery.parseJSON(jqXHR.responseText).message :
-                        jQuery.parseJSON(jqXHR.responseText).error.message;
-            alert(errorString);
-        });
-    }
-
 		// preload shutter audio clip
 		var shutter = new Audio();
 		shutter.autoplay = false;
@@ -229,19 +129,24 @@
 					//console.log(data_uri);
 
 					//'<a href="'+data_uri+'" target="_blank">Save image to McAdvisor Online Profile</a>';
-					//'<a href="'+data_uri+'" download="pic1.jpg">Save image to McAdvisor Online Profile</a>';
+					'<a href="'+data_uri+'" download="pic1.jpg">Save image to McAdvisor Online Profile</a>';
   
 					const image_data = data_uri.substr(23);
 					const ref = firebase.storage().ref();
 					const name = (+new Date()) + '-' + 'bunny';
 					const task = ref.child(name).putString(image_data, "base64", {contentType:"image/png"});
 					task.then((snapshot) => {
+						
 						snapshot.ref.getDownloadURL().then((downloadUrl) => {
-							faceDetect(downloadUrl);
-							//console.log(downloadUrl);
+							
+							document.getElementById("inputImage").value = downloadUrl;
+							
 						});
 					});
 	
+
+
+
 				
 				// shut down camera, stop capturing
 				Webcam.reset();
@@ -251,11 +156,22 @@
 				document.getElementById('my_photo_booth').style.display = 'none';
 			} );
 		}
-</script>
 
-<a href="../../dashboard.html">Continue</a>
+
+
+
+
+
+
+
+	</script>
+
+	<input type="text" name="inputImage" id="inputImage" />
+
+<button onclick="faceDetect()">Analyze face</button><br><br>
 	
 </body>
-
+<script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="facedetect.js"></script>
+
 </html>
