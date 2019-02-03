@@ -246,22 +246,23 @@ span.psw {
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
 </footer>
 
+
 <!--Login Form-->
 <div id="id01" class="modal">
   
-    <form class="modal-content animate" action="facedetect.html">
+    <form class="modal-content animate">
       <div class="imgcontainer">
         <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       </div>
   
       <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
+        <label for="userid"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="userid" required>
   
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <label for="pswd"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="pswd" required>
           
-        <button href="submit">Login</button>
+        <button href="submit" onclick=check(this.form)>Login</button>
         <label>
           <input type="checkbox" checked="checked" name="remember"> Remember me
         </label>
@@ -269,31 +270,46 @@ span.psw {
   
       <div class="container" style="background-color:#f1f1f1">
         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
+        <span class="pswd">Forgot <a href="#">password?</a></span>
       </div>
     </form>
-  </div>
-  
-  <script>
-  // Get the modal
-  var modal = document.getElementById('id01');
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        </script>
+       
+      <script>
+      // Modal Image Gallery
+      function onClick(element) {
+        document.getElementById("img01").src = element.src;
+        document.getElementById("modal01").style.display = "block";
+        var captionText = document.getElementById("caption");
+        captionText.innerHTML = element.alt;
       }
-  }
-  </script>
- 
-<script>
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
+      </script>
+      
+
+    <script language="javascript">
+      function check(form){
+        if(form.userid.value == "hacktest@outlook.com" && form.pswd.value == "12345")
+        {
+          window.open("facedetect.html")
+        }
+        else{
+          alert("Password and username don't match")
+        }
+      }
+    </script>
+  </body>
+</div>
 
 
 // Toggle between showing and hiding the sidebar when clicking the menu icon
